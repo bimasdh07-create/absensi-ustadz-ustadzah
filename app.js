@@ -24,11 +24,11 @@ setInterval(() => {
 
 // 2. MASTER DATA GURU
 const daftarUstadz = [
-    "Ustadz Ahmad Fauzi", "Ustadz Ali Ridho", "Ustadz Muhammad", "Ustadz Umar Khattab",
-    "Ustadz Hamzah", "Ustadz Bilal", "Ustadz Zaid", "Ustadz Abu Bakar",
-    "Ustadz Usman", "Ustadz Ali", "Ustadzah Aisyah Humaira", "Ustadzah Khadijah",
-    "Ustadzah Fatima", "Ustadzah Zainab", "Ustadzah Aminah", "Ustadzah Sarah",
-    "Ustadzah Hajar", "Ustadzah Maryam", "Ustadzah Safiyah", "Ustadzah Ruqayyah"
+    "SAIDI, M.Pd", "ADY MUHIBBUDDIN, S.T", "IMAM SYAFI'I, S.Pd", "M. EDI SANTOSO, S.M", "MOCH. SULTON U.B, S.Pd",
+    "NURILROCHMATIN, M.Pd", "HETI PUJI LESTARI, S.Pd", "FATHIMAH, S.Pd", "AMILATUR ROFIAH",
+    "IKE ROHMAWATI, S.TP", "SITI RODHIYAH, S.Pd", "NURUL FITRIYA R, S.H", "ADINDA ELSA SABILA",
+    "HASNA NAJLA HANIFAH", "JANIA PUTRI SALEHA", "JAZILAH", "OKTAVIA NUR R.",
+    "IZZATUL UMMAH", "ELSYA NUR HASANAH"
 ];
 const selectNama = document.getElementById('nama');
 daftarUstadz.sort().forEach(n => {
