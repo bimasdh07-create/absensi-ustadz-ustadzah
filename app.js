@@ -22,7 +22,7 @@ setInterval(() => {
     document.getElementById('liveClock').textContent = "Waktu Saat Ini: " + new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
 }, 1000);
 
-// 2. MASTER DATA GURU
+// 2. MASTER DATA GURU ASLI YAYASAN IQRA SUNNAH
 const daftarUstadz = [
     "SAIDI, M.Pd", "ADY MUHIBBUDDIN, S.T", "IMAM SYAFI'I, S.Pd", "M. EDI SANTOSO, S.M", "MOCH. SULTON U.B, S.Pd",
     "NURILROCHMATIN, M.Pd", "HETI PUJI LESTARI, S.Pd", "FATHIMAH, S.Pd", "AMILATUR ROFIAH",
@@ -69,7 +69,6 @@ function prosesAbsen(jenisAbsen) {
             return;
         }
 
-        // AUTO AMBIL TANGGAL DAN JAM SECARA TERPISAH
         const sekarang = new Date();
         const tglString = sekarang.toLocaleDateString('id-ID', { year:'numeric', month:'2-digit', day:'2-digit' }).replace(/\//g, '-');
         const jamString = sekarang.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -80,7 +79,7 @@ function prosesAbsen(jenisAbsen) {
             status: status,
             tanggal: tglString,
             jam: jamString,
-            tipe: jenisAbsen, // "Masuk" atau "Pulang"
+            tipe: jenisAbsen, 
             deviceId: DEVICE_ID
         };
 
@@ -105,9 +104,9 @@ document.getElementById('btnPulang').addEventListener('click', () => prosesAbsen
 
 
 // ======================================================
-// 5. FITUR AMBIL DATA & DOWNLOAD MS EXCEL
+// 5. FITUR AMBIL DATA & DOWNLOAD MS EXCEL (SUDAH DIPERBAIKI)
 // ======================================================
-let dataAktifTabel = []; // Menyimpan temporary data untuk di-download
+let dataAktifTabel = []; 
 
 document.getElementById('btnTampilkan').addEventListener('click', () => {
     const bln = document.getElementById('filterBulan').value;
@@ -116,7 +115,7 @@ document.getElementById('btnTampilkan').addEventListener('click', () => {
     
     tbody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Mengambil data dari Google Sheets...</td></tr>`;
 
-    // Tarik data spesifik tab Bulan & Tahun
+    // Tarik data dari Google Sheets
     fetch(`${URL_GOOGLE_SCRIPT}?bulanTahun=${bln} ${thn}`)
     .then(r => r.json())
     .then(res => {
@@ -126,35 +125,36 @@ document.getElementById('btnTampilkan').addEventListener('click', () => {
             document.getElementById('btnDownload').disabled = true;
             return;
         }
-        dataAktifTabel = res; // Simpan ke variabel global
+        dataAktifTabel = res; 
         res.forEach(row => {
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${row.nama}</td><td>${row.tanggal}</td><td>${row.jamMasuk || '-'}</td><td>${row.jamPulang || '-'}</td><td>${row.status}</td>`;
+            // PERBAIKAN: Menggunakan properti huruf kecil sesuai output Google Apps Script (jammasuk & jampulang)
+            let jMasuk = row.jammasuk || row.jamMasuk || '-';
+            let jPulang = row.jampulang || row.jamPulang || '-';
+            
+            tr.innerHTML = `<td><strong>${row.nama}</strong></td><td>${row.tanggal}</td><td>${jMasuk}</td><td>${jPulang}</td><td>${row.status}</td>`;
             tbody.appendChild(tr);
         });
-        document.getElementById('btnDownload').disabled = false; // Aktifkan tombol Excel
+        document.getElementById('btnDownload').disabled = false; 
     }).catch(() => {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color:red;">Gagal memuat data. Tab bulan tersebut mungkin belum terbentuk di Google Sheet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color:red;">Gagal memuat data. Folder bulan tersebut belum terbentuk di Google Sheet.</td></tr>`;
     });
 });
 
-// Aksi Download Excel via ExcelJS (xlsx library)
+// Aksi Download Excel via SheetJS
 document.getElementById('btnDownload').addEventListener('click', () => {
     const bln = document.getElementById('filterBulan').value;
     const thn = document.getElementById('filterTahun').value;
     
-    // Konfigurasi Worksheet
     const worksheet = XLSX.utils.json_to_sheet(dataAktifTabel.map(item => ({
         "Nama Pengajar": item.nama,
         "Tanggal": item.tanggal,
-        "Jam Masuk": item.jamMasuk || '-',
-        "Jam Pulang": item.jamPulang || '-',
+        "Jam Masuk": item.jammasuk || item.jamMasuk || '-',
+        "Jam Pulang": item.jampulang || item.jamPulang || '-',
         "Status": item.status
     })));
     
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Rekap Absen");
-    
-    // Jalankan download file otomatis ke komputer/HP
     XLSX.writeFile(workbook, `Rekap_Absen_${bln}_${thn}.xlsx`);
 });
