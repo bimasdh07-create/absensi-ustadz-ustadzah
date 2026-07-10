@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Presensi Ustadz & Ustadzah</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Library untuk download Excel secara instan via Frontend -->
+    <script src="https://cloudflare.com"></script>
+</head>
+<body>
+    <div class="container-app">
+        <!-- 1. KOTAK FORM ABSENSI -->
+        <div class="card-absensi">
+            <img src="https://ibb.co" alt="Logo Sekolah" class="logo-sekolah">
+            <h2>E-Presensi Pengajar</h2>
+            <p class="sub-judul" id="liveClock">Memuat waktu saat ini...</p>
+            
+            <form id="absensiForm">
+                <div class="form-group">
+                    <label for="nama">Nama Ustadz / Ustadzah</label>
+                    <select id="nama" required>
+                        <option value="">-- Pilih Nama Anda --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status Kehadiran</label>
+                    <select id="status" required>
+                        <option value="Hadir">🟢 Hadir (Mengajar)</option>
+                        <option value="Izin">🟡 Izin Syar'i</option>
+                        <option value="Sakit">🔴 Sakit</option>
+                    </select>
+                </div>
+
+                <!-- Dua Tombol Jenis Absen -->
+                <div class="btn-group">
+                    <button type="button" id="btnMasuk" class="btn-masuk">Absen Masuk</button>
+                    <button type="button" id="btnPulang" class="btn-pulang">Absen Pulang</button>
+                </div>
+            </form>
+
+            <div id="pesanSukses" class="alert alert-sukses hidden"></div>
+        </div>
+
+        <!-- 2. KOTAK REKAP & DOWNLOAD EXCEL -->
+        <div class="card-rekap">
+            <h3>📊 Lihat & Unduh Rekap Presensi</h3>
+            <p class="sub-judul">Pilih bulan dan tahun untuk menarik data harian</p>
+            
+            <div class="filter-group">
+                <select id="filterBulan">
+                    <option value="Januari">Januari</option>
+                    <option value="Februari">Februari</option>
+                    <option value="Maret">Maret</option>
+                    <option value="April">April</option>
+                    <option value="Mei">Mei</option>
+                    <option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option>
+                    <option value="Agustus">Agustus</option>
+                    <option value="September">September</option>
+                    <option value="Oktober">Oktober</option>
+                    <option value="November">November</option>
+                    <option value="Desember">Desember</option>
+                </select>
+
+                <select id="filterTahun">
+                    <!-- Diisi otomatis oleh JS dari 2026 sampai 2036 -->
+                </select>
+            </div>
+
+            <div class="btn-action-group">
+                <button type="button" id="btnTampilkan" class="btn-secondary">Tampilkan Data</button>
+                <button type="button" id="btnDownload" class="btn-excel" disabled>📥 Download MS Excel</button>
+            </div>
+
+            <!-- Preview Tabel -->
+            <div class="table-wrapper">
+                <table id="tabelPreview">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Tanggal</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Pulang</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="isiTabel">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888;">Belum ada data yang dimuat.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

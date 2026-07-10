@@ -1,0 +1,54 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7f5;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+.container-app {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    max-width: 950px;
+    justify-content: center;
+}
+.card-absensi, .card-rekap {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    flex: 1;
+    min-width: 320px;
+    border-top: 6px solid #2e7d32;
+}
+.logo-sekolah { max-width: 80px; display: block; margin: 0 auto 10px; }
+h2, h3 { color: #1b5e20; text-align: center; margin-bottom: 5px; }
+.sub-judul { text-align: center; font-size: 13px; color: #666; margin-bottom: 20px; }
+.form-group { margin-bottom: 15px; }
+label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #333; }
+select { width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 6px; font-size: 14px; outline: none; }
+select:focus { border-color: #2e7d32; }
+
+/* Desain Tombol */
+.btn-group, .filter-group, .btn-action-group { display: flex; gap: 10px; margin-bottom: 15px; }
+button { width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: white; transition: 0.2s; }
+.btn-masuk { background-color: #2e7d32; }
+.btn-masuk:hover { background-color: #1b5e20; }
+.btn-pulang { background-color: #c62828; }
+.btn-pulang:hover { background-color: #9a1f1f; }
+.btn-secondary { background-color: #0277bd; }
+.btn-excel { background-color: #2e7d32; }
+button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+/* Tabel Rekap */
+.table-wrapper { width: 100%; overflow-x: auto; margin-top: 15px; max-height: 250px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; }
+th { background-color: #e8f5e9; color: #1b5e20; }
+.alert { padding: 10px; border-radius: 6px; margin-top: 15px; font-size: 13px; }
+.alert-sukses { background-color: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+.hidden { display: none; }
